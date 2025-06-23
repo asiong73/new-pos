@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mingkay Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container auth-container">
+        <a href="#" onclick="history.back(); return false;" class="back-btn back-btn-auth">Back</a>
+        <h1>Mingkay Inventory Login</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p class="text-center">Don't have an account? <a href="register.html">Register here</a></p>
+        <p id="error-message" class="error-message"></p>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const errorMessage = document.getElementById('error-message');
+
+            // Clear previous session data on new login attempt
+            sessionStorage.clear();
+
+            // Simulate API call for demonstration.
+            // In a real app, this would be a fetch() call to your backend.
+            setTimeout(() => {
+                const { username, password } = data;
+                
+                // Get users from our simulated database (localStorage)
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                
+                // Find the user that matches credentials
+                const foundUser = users.find(user => user.username === username && user.password === password);
+
+                let role = null;
+                let loggedInUsername = null;
+
+                // Check if a registered user was found, otherwise check for default test accounts
+                if (foundUser) {
+                    role = foundUser.role;
+                    loggedInUsername = foundUser.username;
+                } else if (username === 'owner' && password) { // Default test account
+                    role = 'owner';
+                    loggedInUsername = 'owner';
+                } else if (username === 'admin' && password) { // Default test account
+                    role = 'admin';
+                    loggedInUsername = 'admin';
+                }
+
+                if (role) {
+                    // Store user info in session storage to persist login state across pages
+                    sessionStorage.setItem('userRole', role);
+                    sessionStorage.setItem('username', loggedInUsername);
+
+                    errorMessage.textContent = '';
+                    window.location.href = role === 'owner' ? 'dashboard_owner.html' : 'dashboard_admin.html';
+                } else {
+                    errorMessage.textContent = 'Invalid username or password.';
+                }
+            }, 500); // Simulate network delay
+        });
+    </script>
+</body>
+</html>

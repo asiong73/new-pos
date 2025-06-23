@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mingkay Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script>
+        // Client-side Auth Guard
+        (function() {
+            const userRole = sessionStorage.getItem('userRole');
+            if (!['admin', 'owner'].includes(userRole)) {
+                alert('Access Denied. You do not have permission to view this page.');
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+    <div class="container">
+        <header>
+            <h1>Mingkay Inventory - Admin Dashboard</h1>
+            <div>
+                <a href="#" onclick="history.back(); return false;" class="back-btn">Back</a>
+                <a href="#" id="logout-btn" class="logout-btn">Logout</a>
+            </div>
+        </header>
+
+        <h2>Management Areas</h2>
+        <div class="dashboard-links">
+            <a href="inventory.html" title="View and manage stock levels and items">Manage Inventory</a>
+            <a href="sales.html" title="View and manage sales records">Manage Sales</a>
+            <a href="employees.html" title="View and manage employee records">Manage Employees</a>
+            <a href="audits.html" title="View and manage audit logs">Manage Audits</a>
+        </div>
+    </div>
+    <script>
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+/* General Body Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header and Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    color: #0056b3;
+}
+
+nav a, .logout-btn {
+    text-decoration: none;
+    color: #007bff;
+    margin-left: 15px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+nav a:hover {
+    background-color: #e9ecef;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+form input, form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+form button {
+    grid-column: 1 / -1; /* Span full width */
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.2s;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+thead th {
+    background-color: #007bff;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Login/Register Page */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 40px;
+}
+
+.auth-container h1 {
+    text-align: center;
+}
+
+/* Dashboard Specific Styles */
+.dashboard-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+.dashboard-links a {
+    display: block;
+    padding: 40px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    transition: transform 0.2s, background-color 0.2s;
+}
+.dashboard-links a:hover {
+    transform: translateY(-5px);
+    background-color: #0056b3;
+}
+.dashboard-links a.admin-link {
+    background-color: #17a2b8;
+}
+.dashboard-links a.admin-link:hover {
+    background-color: #138496;
+}
+
+/* Global Record Search Styles (dashboard_owner.html) */
+.search-form-layout {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+}
+.search-form-layout button { /* Targeting button within this form layout */
+    grid-column: auto;
+}
+#search-results {
+    margin-top: 20px;
+}
+#search-results h3 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+}
+#search-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+#search-results li {
+    background: #f8f9fa;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 4px;
+}
+.search-error-message { /* For error messages in search results */
+    color: red;
+}
+
+/* Utility Classes */
+.section-divider { /* For horizontal rules */
+    margin: 40px 0;
+}
+
+also.text-center { /* For general text alignment */
+    text-align: center;
+}
+
+/* Message Styles (login.html, register.html) */
+.error-message {
+    color: red;
+    text-align: center;
+}
+.message-success {
+    color: green;
+    text-align: center;
+}
+.message-error {
+    color: red;
+    text-align: center;
+}
+
+/* Employee Photo (employees.html) */
+.employee-photo {
+    border-radius: 50%;
+}

@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-vscode.js-debug-nightly",
+        "solomonkinard.chrome-extension-api",
+        "solomonkinard.chrome-extensions",
+        "ritwickdey.liveserver",
+        "nikhil-patil.npm-run",
+        "iulian-radu-at.find-unused-exports"
+    ]
+}

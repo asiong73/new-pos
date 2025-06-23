@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard - Mingkay Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script>
+        // Client-side Auth Guard
+        // In a real app, this would be handled by a server-side session.
+        (function() {
+            const userRole = sessionStorage.getItem('userRole');
+            if (userRole !== 'owner') {
+                alert('Access Denied. You do not have permission to view this page.');
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+    <div class="container">
+        <header>
+            <h1>Mingkay Inventory - Owner Dashboard</h1>
+            <div>
+                <a href="#" onclick="history.back(); return false;" class="back-btn">Back</a>
+                <a href="#" id="logout-btn" class="logout-btn">Logout</a>
+            </div>
+        </header>
+
+        <h2>Global Record Search</h2>
+        <form id="search-form" class="search-form-layout">
+            <div class="form-group">
+                <label for="search-term">Search by Name</label>
+                <input type="text" id="search-term" placeholder="e.g., John Doe, Laptop, etc." required>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="search-results"></div>
+
+        <hr class="section-divider">
+
+        <h2>Management Areas</h2>
+        <div class="dashboard-links">
+            <a href="dashboard_admin.html" class="admin-link" title="Switch to the administrative dashboard view">Go to Admin View</a>
+            <a href="employees.html" title="View and manage employee records">Manage Employees</a>
+            <a href="inventory.html" title="View and manage stock levels and items">Manage Inventory</a>
+            <a href="sales.html" title="View and manage sales records">Manage Sales</a>
+            <a href="audits.html" title="View and manage audit logs">Manage Audits</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const term = document.getElementById('search-term').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '<p>Searching...</p>';
+
+            // Simulate an API call with a short delay
+            setTimeout(() => {
+                // For demonstration, we'll use registered users and mock data for other records.
+                // In a real app, a single API call would fetch all this.
+
+                // 1. Use registered users from localStorage as "employees"
+                const registeredUsers = JSON.parse(localStorage.getItem('users')) || [];
+                const mockEmployees = registeredUsers.map((user, index) => ({
+                    id: index + 1,
+                    name: user.username,
+                    position: user.role.charAt(0).toUpperCase() + user.role.slice(1) // Capitalize role
+                }));
+
+                // 2. Mock data for other entities since they aren't stored in localStorage yet
+                const mockInventory = [
+                    { id: 101, item_name: 'Laptop Pro', quantity: 15 },
+                    { id: 102, item_name: 'Wireless Mouse', quantity: 50 },
+                    { id: 103, item_name: 'Mechanical Keyboard', quantity: 25 },
+                    { id: 104, item_name: 'Laptop Stand', quantity: 30 }
+                ];
+                const mockSales = [
+                    { id: 201, item_name: 'Laptop Pro', sale_date: '2023-10-01' },
+                    { id: 202, item_name: 'Wireless Mouse', sale_date: '2023-10-02' }
+                ];
+                const mockAudits = [
+                    { id: 301, auditor_name: 'Alice', audit_date: '2023-09-15' },
+                    { id: 302, auditor_name: 'owner', audit_date: '2023-09-20' }
+                ];
+
+                // 3. Filter all data based on the search term
+                const results = {
+                    employees: mockEmployees.filter(item => item.name.toLowerCase().includes(term)),
+                    inventory: mockInventory.filter(item => item.item_name.toLowerCase().includes(term)),
+                    sales: mockSales.filter(item => item.item_name.toLowerCase().includes(term)),
+                    audits: mockAudits.filter(item => item.auditor_name.toLowerCase().includes(term))
+                };
+
+                displayResults(results);
+            }, 500); // Simulate network delay
+        });
+
+        function displayResults(results) {
+            const container = document.getElementById('search-results');
+            container.innerHTML = '';
+
+            if (Object.values(results).every(arr => arr.length === 0)) {
+                container.innerHTML = '<p>No records found.</p>';
+                return;
+            }
+
+            if (results.employees && results.employees.length > 0) {
+                container.innerHTML += '<h3>Employees</h3><ul>' +
+                    results.employees.map(item => `<li>ID: ${item.id} - ${item.name} (${item.position})</li>`).join('') +
+                    '</ul>';
+            }
+            if (results.inventory && results.inventory.length > 0) {
+                container.innerHTML += '<h3>Inventory</h3><ul>' +
+                    results.inventory.map(item => `<li>ID: ${item.id} - ${item.item_name} (Qty: ${item.quantity})</li>`).join('') +
+                    '</ul>';
+            }
+            if (results.sales && results.sales.length > 0) {
+                container.innerHTML += '<h3>Sales</h3><ul>' +
+                    results.sales.map(item => `<li>ID: ${item.id} - ${item.item_name} (Date: ${new Date(item.sale_date).toLocaleDateString()})</li>`).join('') +
+                    '</ul>';
+            }
+            if (results.audits && results.audits.length > 0) {
+                container.innerHTML += '<h3>Audits</h3><ul>' +
+                    results.audits.map(item => `<li>ID: ${item.id} - ${item.auditor_name} (Date: ${new Date(item.audit_date).toLocaleDateString()})</li>`).join('') +
+                    '</ul>';
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
