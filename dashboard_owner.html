@@ -14,7 +14,7 @@
             const userRole = sessionStorage.getItem('userRole');
             if (userRole !== 'owner') {
                 alert('Access Denied. You do not have permission to view this page.');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }
         })();
     </script>
@@ -133,7 +133,7 @@
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             sessionStorage.clear();
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     </script>
 </body>
